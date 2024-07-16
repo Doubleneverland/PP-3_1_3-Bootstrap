@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark " th:each="name : ${user_page}">
+            <div class="row">
+                <div class="example-content-main mr-2" style="color: aliceblue">
+                    <h3 th:text="${user_page.email}"></h3>
+                </div>
+
+                <div style="color: aliceblue" class="mr-2">
+                    <h3><small> with roles: </small></h3>
+                </div>
+                <div style="color: aliceblue">
+                    <h3 th:text="${user_page.getAuthorities()}"></h3>
+                </div>
+            </div>
+            <div class="col">
+                <a class="close logout-container top-0 align-items-end offset-md-9" style="color: gray" href="/logout">
+                    Logout </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <!--Левый блок-->
+        <div class="container-fluid" style=" background-color: lightslategray">
+            <!--    <div class="w-15 h-100 d-inline-block" style="float: left">-->
+            <div class="block-left" >
+                <div class="container">
+                    <div class="flex-column-reverse">
+                        <div class="w-auto"></div>
+                        <div class="col col-lg-1" th:each="name : ${user_page}">
+                            <form action="/admin/allusers">
+                            <button class="btn btn-primary btn-lg active"
+                                    aria-pressed="true" aria-current="page" >Admin</button>
+                            </form>
+                            <br>
+                            <br>
+                            <form action="/admin/userpage">
+                                <input type="hidden" name="id" th:value="${user_page.id}">
+                                <button class="btn btn-primary btn-lg" aria-current="page">User</button>
+                                <!--                            <button type="submit" value="User" class="btn btn-lg btn-primary"></button>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!--Правый блок-->
+
+        <div style="float: right; width: 85%" class="w-90 h-100 d-inline-block">
+
+            <h1>User information-page</h1>
+
+            <div class="col-md-auto container-fluid row justify-content-end">
+
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                </div>
+            </div>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <div class="nav nav-tabs">
+                    <h4 class="col align-self-center"><strong>About user</strong></h4>
+                </div>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${user_page}">
+                    <th scope="row" th:text="${user.id}"></th>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.age}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                        <ul>
+                            <li th:text="${user.getAuthorities()}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+        </div>
+<style>
+    .logout-container {
+        position: relative;
+    }
+
+    .block-left {
+        float: left;
+        height: 100%;
+        background: aquamarine;
+
+    }
+
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+        integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+</body>
+</html>
