@@ -62,19 +62,8 @@ public class AdminController {
         return "redirect:/admin/allusers";
     }
 
-    @GetMapping("/user/delete")
-    public String pageDelete(@RequestParam("id") long id, Model model) {
-        model.addAttribute("que", userService.upPage(id));
-        return "delete_user";
-    }
 
-    @GetMapping("/user/update")
-    public String pageUpdate(@RequestParam("id") long id, Model model) {
-        model.addAttribute("up_user", userService.upPage(id));
-        model.addAttribute("update_role", roleService.getAllRoles());
-        return "update_user";
 
-    }
     @PostMapping("/user/edit")
     public String update(@ModelAttribute("User") User user,
                          @RequestParam("id") long id,

@@ -40,14 +40,7 @@
             <div class="nav flex-column nav-pills w-100" id="v-pills-tab" role="tablist"
                  aria-orientation="vertical">
 
-                <form action="/admin/allusers">
-                    <button type="submit" role="tab" class="nav-link"
-                            style="display: flex; place-content: center; width: 220px"
-                            aria-pressed="true" aria-current="page" aria-selected="false">Admin
-                    </button>
-                </form>
-
-                <form action="/admin/userpage">
+                <form action="/user/userpage">
                     <input type="hidden" name="id" th:value="${user_page.id}">
                     <button type="submit" role="tab" class="nav-link active"
                             style="display: flex; place-content: center; width: 220px"
