@@ -15,14 +15,14 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark " th:each="name : ${owner}">
         <div class="row">
-            <div class="example-content-main mr-2" style="color: aliceblue">
+            <div class="example-content-main mr-2" style="color: white">
                 <h3 th:text="${name.getEmail()}"></h3>
             </div>
 
-            <div style="color: aliceblue" class="mr-2">
+            <div style="color: white" class="mr-2">
                 <h3><small> with roles: </small></h3>
             </div>
-            <div style="color: aliceblue">
+            <div style="color: white">
                 <h3 th:text="${owner.getAuthorities()}"></h3>
             </div>
         </div>
@@ -62,7 +62,7 @@
         </div>
 
     </div>
-    <div>
+    <div style="width: 85%; background-color: aliceblue; height: 100vh">
         <!--Правый блок-->
 
         <div style="float: right; width: 100%; height: 100%">
@@ -178,7 +178,7 @@
                                                  class="form-group row justify-content-sm-center">
                                                 <label>
                                                     <input type="checkbox" th:value="${role.id}"
-                                                           th:text="${role.role}" name="role">
+                                                           th:text="${role.role}" name="role" >
                                                 </label>
 
                                             </div>

@@ -59,16 +59,10 @@ public class AdminController {
 
     @PostMapping("/user/edit")
     public String update(@ModelAttribute("User") User user,
-                         @RequestParam("id") long id,
-                         @RequestParam("name") String name,
-                         @RequestParam("lastName") String lastname,
-                         @RequestParam("age") long age,
-                         @RequestParam ("email") String email,
-                         @RequestParam("password") String password,
                          @RequestParam("role") Collection<Long> roleById) {
-        Collection<Role> list = new ArrayList<>(roleService.getRoleById(roleById));
-        user.setRoles(list);
-        userService.update(id, name, lastname, age, email, password, list);
+
+        userService.update(user.getId(), user.getName(), user.getLastName(),
+                user.getAge(), user.getEmail(), user.getPassword(), roleById);
         return "redirect:/admin/allusers";
     }
 

@@ -79,7 +79,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Role> role) {
+    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role) {
         return userDao.update(id, name, lastname, age, mail, password, role);
     }
 

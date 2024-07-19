@@ -16,7 +16,7 @@ public interface UserDao {
 
     List<User> read();
 
-    User update(long id, String name, String lastname, long age, String mail, String password, Collection<Role> role);
+    User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role);
 
     void delete(long id);
 

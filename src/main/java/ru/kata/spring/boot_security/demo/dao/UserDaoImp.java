@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -51,8 +52,14 @@ public class UserDaoImp implements UserDao {
     @Transactional
     public void create(User user, Collection<Long> selectRole) {
         if(user != null) {
-            Collection<Role> list = new ArrayList<>(roleService.getRoleById(selectRole));
+            Collection<Role> list = new ArrayList<>();
+            for (Long num : selectRole) {
+                list.addAll(roleService.getRoleById(Collections.singleton(num)));
+            }
+
             user.setRoles(list);
+            String encoderPass = passwordEncoder().encode(user.getPassword());
+            user.setPassword(encoderPass);
             entityManager.persist(user);
         }
     }
@@ -77,7 +84,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Transactional
-    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Role> role) {
+    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role) {
         User user = entityManager.find(User.class, id);
         if (user != null) {
             user.setName(name);
@@ -86,7 +93,11 @@ public class UserDaoImp implements UserDao {
             user.setEmail(mail);
             String encoderPass = passwordEncoder().encode(password);
             user.setPassword(encoderPass);
-            user.setRoles(role);
+            Collection<Role> list = new ArrayList<>();
+            for (Long num : role) {
+                list.addAll(roleService.getRoleById(Collections.singleton(num)));
+            }
+            user.setRoles(list);
             entityManager.merge(user);
         }
         return user;

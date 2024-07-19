@@ -16,7 +16,7 @@ public interface UserService {
 
     void delete(long id);
 
-    User update(long id, String name, String lastname,long age, String mail, String password, Collection<Role> role);
+    User update(long id, String name, String lastname,long age, String mail, String password, Collection<Long> role);
 
     User upPage(long id);
 
