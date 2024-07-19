@@ -29,14 +29,7 @@ public class AdminController {
     @PostMapping
     public String create(@ModelAttribute("create_user") User user,
                          @RequestParam("roles") Collection<Long> selectById) {
-        if(user != null) {
-            Collection<Role> list = new ArrayList<>();
-            for (Long newRole : selectById) {
-                list.addAll(roleService.getRoleById(newRole));
-            }
-            user.setRoles(list);
-            userService.save(user);
-        }
+        userService.create(user, selectById);
         return "redirect:/admin/allusers";
     }
 
@@ -73,10 +66,7 @@ public class AdminController {
                          @RequestParam ("email") String email,
                          @RequestParam("password") String password,
                          @RequestParam("role") Collection<Long> roleById) {
-        Collection<Role> list = new ArrayList<>();
-        for (Long upRole : roleById) {
-            list.addAll(roleService.getRoleById(upRole));
-        }
+        Collection<Role> list = new ArrayList<>(roleService.getRoleById(roleById));
         user.setRoles(list);
         userService.update(id, name, lastname, age, email, password, list);
         return "redirect:/admin/allusers";

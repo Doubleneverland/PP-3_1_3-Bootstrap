@@ -1,22 +1,31 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 
 @Repository
 public class UserDaoImp implements UserDao {
+
+    private final RoleService roleService;
+    @Autowired
+    public UserDaoImp(RoleService roleService) {
+        this.roleService = roleService;
+
+    }
 
     public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -25,17 +34,29 @@ public class UserDaoImp implements UserDao {
     private EntityManager entityManager;
 
 
+
     @Override
     @Transactional
     public void save(User user) {
 
         if (user != null) {
+
             String encoderPass = passwordEncoder().encode(user.getPassword());
             user.setPassword(encoderPass);
             entityManager.persist(user);
         }
-
     }
+
+    @Override
+    @Transactional
+    public void create(User user, Collection<Long> selectRole) {
+        if(user != null) {
+            Collection<Role> list = new ArrayList<>(roleService.getRoleById(selectRole));
+            user.setRoles(list);
+            entityManager.persist(user);
+        }
+    }
+
     @Override
     public User getUserByName(String name) {
         List<User> query =
@@ -50,9 +71,8 @@ public class UserDaoImp implements UserDao {
     @Override
     public List<User> read() {
 
-        TypedQuery<User> query = (TypedQuery<User>) entityManager.createQuery("from User ");
+        return entityManager.createQuery("from User ").getResultList();
 
-        return query.getResultList();
     }
 
     @Override

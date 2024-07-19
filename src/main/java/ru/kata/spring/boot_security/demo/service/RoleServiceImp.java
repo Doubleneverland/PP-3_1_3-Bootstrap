@@ -35,7 +35,7 @@ public class RoleServiceImp implements RoleService{
 
     @Override
     @Transactional
-    public Collection<Role> getRoleById(long id) {
-        return roleDao.getRoleById(id);
+    public Collection<Role> getRoleById(Collection<Long> roleById) {
+        return roleDao.getRoleById(roleById);
     }
 }

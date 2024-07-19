@@ -24,4 +24,6 @@ public interface UserDao {
 
     User upPage(long id);
 
+    void create(User user, Collection<Long> selectRole);
+
 }

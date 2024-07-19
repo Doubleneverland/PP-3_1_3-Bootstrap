@@ -20,4 +20,6 @@ public interface UserService {
 
     User upPage(long id);
 
+    void create(User user, Collection<Long> selectRole);
+
 }

@@ -27,8 +27,8 @@ public class RoleDaoImp implements RoleDao{
     }
 
     public Collection<Role> getAllRoles() {
-        TypedQuery<Role> list = (TypedQuery<Role>) entityManager.createQuery("from Role");
-        return list.getResultList();
+        return entityManager.createQuery("from Role").getResultList();
+
     }
 
     @Override
@@ -44,10 +44,13 @@ public class RoleDaoImp implements RoleDao{
     }
 
     @Override
-    public Collection<Role> getRoleById(long id) {
-        TypedQuery<Role> role =
-                entityManager.createQuery("SELECT r FROM Role r WHERE r.id = :roleId", Role.class)
-                        .setParameter("roleId", id);
+    public Collection<Role> getRoleById(Collection<Long> roleById) {
+        TypedQuery<Role> role = null;
+        for (Long roleId : roleById) {
+                 role = entityManager.createQuery("SELECT r FROM Role r WHERE r.id = :roleId", Role.class)
+                            .setParameter("roleId", roleId);
+        }
+
         return role.getResultList();
     }
 }

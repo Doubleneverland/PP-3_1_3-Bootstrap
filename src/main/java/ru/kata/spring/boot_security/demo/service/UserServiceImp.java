@@ -56,6 +56,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public void create(User user, Collection<Long> selectRole) {
+        userDao.create(user, selectRole);
+    }
+
+    @Override
     @Transactional
     public List<User> read() {
         return userDao.read();
